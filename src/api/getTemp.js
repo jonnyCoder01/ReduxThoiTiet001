@@ -6,6 +6,4 @@ function getTemp(cityName) {
     .then(resJson => resJson.list[0].main.temp )
 }
 
-getTemp('Saigon')
-.then(temp => console.log(temp))
-.catch(err => console.log(err));
+export default getTemp;
