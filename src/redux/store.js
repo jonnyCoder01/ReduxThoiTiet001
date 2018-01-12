@@ -4,7 +4,7 @@ const defaultState = {
     cityName: null,
     temp: null,
     isLoading: false,
-    error: false,
+    error: true,
 };
 
 const reducer = (state = defaultState, action) => {

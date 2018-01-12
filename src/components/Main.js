@@ -11,16 +11,27 @@ import {
     Text,
     View, TextInput, TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import getTemp from '../api/getTemp';
 
-export default class Main extends Component {
+class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
             cityName: '',
         }
     }
+
+    getWeatherMessage() {
+        const { error, isLoading, cityName, temp } = this.props;
+        if (isLoading) return '..... is Loading';
+        if (error) return 'Vui long thu lai';
+        if (!cityName) return 'Nhap ten thanh pho cua ban';
+        return '${cityName} hien tai la ${temp} oC';
+
+    }
+
 
     getTempByCityName() {
         getTemp(this.state.cityName)
@@ -32,7 +43,7 @@ export default class Main extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.message} >
-                    Ha noi hien tai la 30oC
+                    {this.getWeatherMessage()}
                 </Text>
                 <TextInput
                     style={styles.TextInput}
@@ -59,7 +70,7 @@ const styles = StyleSheet.create({
     },
     message: {
         color: '#fff',
-        fontSize: 30
+        fontSize: 20
     },
     button: {
         backgroundColor: 'gray',
@@ -78,3 +89,9 @@ const styles = StyleSheet.create({
     }
 
 });
+
+function mapStateToProps(state){
+    return { cityName: state.cityName, temp: state.temp, error: state.error,
+    isLoading: state.isLoading }
+}
+export default connect(mapStateToProps)(Main)
