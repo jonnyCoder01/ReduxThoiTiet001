@@ -12,6 +12,7 @@ import {
   View, TextInput, TouchableOpacity
 } from 'react-native';
 
+import '../api/getTemp';
 
 export default class Main extends Component {
     constructor(props) {
