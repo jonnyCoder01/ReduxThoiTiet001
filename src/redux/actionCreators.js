@@ -1,3 +1,5 @@
+import getTemp from '../api/getTemp';
+
 export function startFetchData() {
     return { type: 'START_FETCH' };
 }
@@ -11,4 +13,19 @@ export function fetchSuccess() {
 
 export function fetchError() {
     return { type: 'FETCH_ERROR' };
+}
+
+
+// viết action của redux-thunk
+
+export function fetchDataThunk(cityName) {
+    return dispatch => {
+        dispatch(startFetchData());
+        getTemp(cityName)
+        .then(temp =>{
+             dispatch(fetchSuccess(cityName, temp));
+                console.log(temp);
+            })
+        .catch(() => dispatch(fetchError()));
+    };
 }

@@ -12,9 +12,11 @@ import {
     View, TextInput, TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchError, fetchSuccess, startFetchData } from '../redux/actionCreators';
+//import { fetchError, fetchSuccess, startFetchData, fetchDataThunk } from '../redux/actionCreators';
+// thay the bang lenh sau
+import * as actionCreators from '../redux/actionCreators';
 
-import getTemp from '../api/getTemp';
+
 
 class Main extends Component {
     constructor(props) {
@@ -37,10 +39,12 @@ class Main extends Component {
 
     getTempByCityName() {
         const { cityName } = this.state;
-        this.props.startFetchData();
-        getTemp(this.state.cityName)
-            .then(temp => this.props.fetchSuccess(cityName, temp))
-            .catch(err => this.props.fetchError());
+        this.props.fetchDataThunk(cityName);
+
+        // this.props.startFetchData();
+        // getTemp(this.state.cityName)
+        //     .then(temp => this.props.fetchSuccess(cityName, temp))
+        //     .catch(err => this.props.fetchError());
     }
 
     render() {
@@ -98,4 +102,5 @@ function mapStateToProps(state){
     return { cityName: state.cityName, temp: state.temp, error: state.error,
     isLoading: state.isLoading }
 }
-export default connect(mapStateToProps, { startFetchData, fetchSuccess, fetchError } )(Main)
+//export default connect(mapStateToProps, { startFetchData, fetchSuccess, fetchError, fetchDataThunk } )(Main)
+export default connect(mapStateToProps, actionCreators )(Main);
