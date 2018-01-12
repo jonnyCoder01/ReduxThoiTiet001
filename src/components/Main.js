@@ -12,6 +12,7 @@ import {
     View, TextInput, TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
+import { fetchError, fetchSuccess, startFetchData } from '../redux/actionCreators';
 
 import getTemp from '../api/getTemp';
 
@@ -28,15 +29,18 @@ class Main extends Component {
         if (isLoading) return '..... is Loading';
         if (error) return 'Vui long thu lai';
         if (!cityName) return 'Nhap ten thanh pho cua ban';
-        return '${cityName} hien tai la ${temp} oC';
+        // return '${cityName} hien tai la ${temp} oC';
+        return temp;
 
     }
 
 
     getTempByCityName() {
+        const { cityName } = this.state;
+        this.props.startFetchData();
         getTemp(this.state.cityName)
-            .then(temp => console.log(temp))
-            .catch(err => console.log(err));
+            .then(temp => this.props.fetchSuccess(cityName, temp))
+            .catch(err => this.props.fetchError());
     }
 
     render() {
@@ -94,4 +98,4 @@ function mapStateToProps(state){
     return { cityName: state.cityName, temp: state.temp, error: state.error,
     isLoading: state.isLoading }
 }
-export default connect(mapStateToProps)(Main)
+export default connect(mapStateToProps, { startFetchData, fetchSuccess, fetchError } )(Main)

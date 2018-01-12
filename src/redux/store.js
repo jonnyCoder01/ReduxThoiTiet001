@@ -1,10 +1,11 @@
 import { createStore } from 'redux';
 
+
 const defaultState = {
     cityName: null,
     temp: null,
     isLoading: false,
-    error: true,
+    error: false,
 };
 
 const reducer = (state = defaultState, action) => {
