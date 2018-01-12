@@ -31,8 +31,8 @@ class Main extends Component {
         if (isLoading) return '..... is Loading';
         if (error) return 'Vui long thu lai';
         if (!cityName) return 'Nhap ten thanh pho cua ban';
-        // return '${cityName} hien tai la ${temp} oC';
-        return temp;
+         return `${cityName} hien tai la ${temp} oC`; 
+        //return  `${cityName} hiện tại là ${temp}oC`;
 
     }
 
